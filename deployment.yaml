@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-java
+  template:
+    metadata:
+      labels:
+        app: api-java
+    spec:
+      containers:
+        - name: api-java
+          image:  johnavila/0.3-api-java:1.1
+          resources:
+            requests:
+              memory: "60Mi"
+              cpu: "60m"
+              ephemeral-storage: "1Gi"
+            limits:
+              memory: "70Mi"
+              cpu: "100m"
+          ports:
+            - name: http
+              containerPort: 5050

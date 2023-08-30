@@ -1,0 +1,6 @@
+apiVersion: v2
+image:
+  repository: johnavila/0.3-api-java:1.1 
+  tag: latest  
+service:
+  port: 8080 

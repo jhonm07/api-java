@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-local-service
+spec:
+  type: NodePort 
+  ports:
+    - port: 80 
+      targetPort: 5050 
+      nodePort: 30000  
+  selector:
+    app: api-java
