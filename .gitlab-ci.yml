@@ -2,16 +2,35 @@ stages:
   - build
   - test
   - deploy
-  
+
+sonarqube-scan:
+  stage: test
+  image: sonarsource/sonar-scanner-cli:latest
+  script:
+    - sonar-scanner \
+        -Dsonar.projectKey=api-java \
+        -Dsonar.sources=api-java/greeting-api/src/main/java \
+        -Dsonar.host.url=http://urlsonarqube:9000 \
+        -Dsonar.login=token-de-autenticacion-de-sonarqube  
+
+build-jar:
+  stage: build
+  script:
+    - mvn clean package 
+  artifacts:
+    paths:
+      - target/greetingAPI.jar         
+
 build:
   stage: build
   script:
     - docker build -t -api-java .
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - docker tag api-java $DOCKER_USERNAME/api-java:latest
-  
   only:
     - main
+
+
 test:
   stage: test
   script:
